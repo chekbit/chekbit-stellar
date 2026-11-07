@@ -1,6 +1,22 @@
+
+
+
+
+<div align="center">
+
 # Chekbit Stellar Service
 
-The Chekbit Stellar Service is the Stellar-network integration service for the Chekbit platform. It handles Stellar-specific wallet operations, payment orders, Horizon monitoring, transaction records, and payment callbacks.
+****Stellar Powered Non-custodial wallet and payment****
+
+[![NestJS](https://img.shields.io/badge/NestJS-11-E0234E?style=flat-square&logo=nestjs)](https://nestjs.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+[![Stellar SDK](https://img.shields.io/badge/Stellar_SDK-latest-7B66FF?style=flat-square&logo=stellar)](https://stellar.org)
+[![BullMQ](https://img.shields.io/badge/BullMQ-Redis_queues-FF4444?style=flat-square)](https://docs.bullmq.io)
+[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat-square&logo=docker)](https://docker.com)
+
+</div>
+
+The Chekbit Stellar Service is the Stellar-network implementation service for the Chekbit platform. It handles Stellar-specific wallet operations, payment orders, Horizon monitoring, transaction records, and payment callbacks.
 
 It works alongside the main **Chekbit backend system**, which owns the broader application domain, including the ledger, escrow, user/account workflows, and associated business rules. This service reports confirmed Stellar payment events to the Chekbit backend; it is not the platform's ledger or escrow system of record.
 
