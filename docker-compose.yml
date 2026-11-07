@@ -1,0 +1,114 @@
+version: '3.9'
+
+services:
+  stellar-live:
+    build:
+      context: .
+    container_name: stellar-live
+    restart: always
+    env_file:
+      - .env.live
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      - APP_ENV=production
+      - BASE_URL=${LIVE_BASE_URL:-http://localhost:5000}
+      - PORT=5000
+      - PROCESS_NAME=chekbit-stellar-live
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_SYNC=${DB_SYNC}
+      - DB_DATABASE=${DB_DATABASE}
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASS=${MAIL_PASS}
+      - MAIL_FROM=${MAIL_FROM}
+      - BULL_DASHBOARD_USER=${BULL_DASHBOARD_USER}
+      - BULL_DASHBOARD_PASS=${BULL_DASHBOARD_PASS}
+      - STELLAR_PUBLIC_KEY=${STELLAR_PUBLIC_KEY}
+      - STELLAR_SECRET_KEY=${STELLAR_SECRET_KEY}
+      - STELLAR_HORIZON_URL=${STELLAR_HORIZON_URL}
+      - STELLAR_NETWORK=${STELLAR_NETWORK}
+      - CHEKBIT_BACKEND_API_WEBHOOK_URL=${CHEKBIT_BACKEND_API_WEBHOOK_URL}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+    depends_on:
+      - redis
+    networks:
+      - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    volumes:
+      - uploads_data:/app/uploads
+
+  stellar-sandbox:
+    build:
+      context: .
+    container_name: stellar-sandbox
+    restart: always
+    env_file:
+      - .env.sandbox
+    ports:
+      - "127.0.0.1:5001:5001"
+    environment:
+      - APP_ENV=sandbox
+      - BASE_URL=${SANDBOX_BASE_URL:-http://localhost:5001}
+      - PORT=5001
+      - PROCESS_NAME=chekbit-stellar-sandbox
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_SYNC=${DB_SYNC}
+      - DB_DATABASE=${DB_DATABASE}
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASS=${MAIL_PASS}
+      - MAIL_FROM=${MAIL_FROM}
+      - BULL_DASHBOARD_USER=${BULL_DASHBOARD_USER}
+      - BULL_DASHBOARD_PASS=${BULL_DASHBOARD_PASS}
+      - STELLAR_PUBLIC_KEY=${STELLAR_PUBLIC_KEY}
+      - STELLAR_SECRET_KEY=${STELLAR_SECRET_KEY}
+      - STELLAR_HORIZON_URL=${STELLAR_HORIZON_URL}
+      - STELLAR_NETWORK=${STELLAR_NETWORK}
+      - CHEKBIT_BACKEND_API_WEBHOOK_URL=${CHEKBIT_BACKEND_API_WEBHOOK_URL}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+    depends_on:
+      - redis
+    networks:
+      - app-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    volumes:
+      - uploads_data:/app/uploads
+
+  redis:
+    image: redislabs/redismod:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6378:6379"
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
+  uploads_data:
